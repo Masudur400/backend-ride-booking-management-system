@@ -1,8 +1,5 @@
 import { Response } from "express";
 
- 
-
-
 
 export interface TMeta {
     page: number;

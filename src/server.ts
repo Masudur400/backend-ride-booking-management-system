@@ -6,25 +6,20 @@ import { envVars } from './app/config/env';
 import { seedSuperAdmin } from './app/utils/seedSupperAdmin';
 
 
-let server: Server
+let server: Server 
 
-
-
-
-const startServer = async () => { 
-    try { 
-        await mongoose.connect(envVars.DB_URL)  
-        console.log('Connect to DB...!') 
+const startServer = async () => {
+    try {
+        await mongoose.connect(envVars.DB_URL)
+        console.log('Connect to DB...!')
         server = app.listen(envVars.PORT, () => {
             console.log(`Server is listening to port ${envVars.PORT}`)
-        }) 
+        })
     } catch (error) {
-        console.log(error)  
-    } 
+        console.log(error)
+    }
 }
-
-
-
+ 
 
 
 (async () => {
@@ -44,7 +39,7 @@ process.on('SIGTERM', () => {
     if (server) {
         server.close(() => {
             process.exit(1)
-        }) 
+        })
     }
     process.exit(1)
 })

@@ -6,7 +6,8 @@ export interface AuthTokens {
 }
 
 
-// it only use for production 
+// --------------------------it only use for production -------------------
+
 // export const setAuthCookie = (res: Response, tokenInfo: AuthTokens) => {
 //     if (tokenInfo.accessToken) {
 //         res.cookie("accessToken", tokenInfo.accessToken, {
@@ -26,7 +27,8 @@ export interface AuthTokens {
 // }
 
 
-// it only use for development 
+// -----------------it only use for development----------------------- 
+
 export const setAuthCookie = (res: Response, tokenInfo: AuthTokens) => {
 
     if (tokenInfo.accessToken) {

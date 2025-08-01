@@ -13,6 +13,7 @@ export enum Role {
     ADMIN = "ADMIN",
     USER = "USER",
     RIDER = "RIDER",
+    DRIVER = "DRIVER"
 }
 
 export interface IAuthProvider {

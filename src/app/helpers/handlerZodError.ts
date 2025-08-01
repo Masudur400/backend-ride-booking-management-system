@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { TErrorSources, TGenericErrorResponse } from './../interface/errorType';  
 
 export const handleZodError = (err:any):TGenericErrorResponse=>{

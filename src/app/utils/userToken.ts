@@ -5,13 +5,13 @@ import { IUser } from "../modules/user/user.interface";
 import { generateToken, verifyToken } from "./jwt";
 import { User } from "../modules/user/user.model";
 import httpStatus from 'http-status-codes';
-import AppError from "../errorHandler/AppError";
+import AppError from "../errorHandler/AppError"; 
 
 export const createUserToken = (user: Partial<IUser>) => {
     const jwtPayload = {
         userId: user._id,
         email: user.email,
-        role: user.role
+        role: user.role 
     }
     const accessToken = generateToken(jwtPayload, envVars.JWT_ACCESS_SECRET, envVars.JWT_ACCESS_EXPIRES)
     const refreshToken = generateToken(jwtPayload, envVars.JWT_REFRESH_SECRET, envVars.JWT_REFRESH_EXPIRES)
@@ -20,8 +20,6 @@ export const createUserToken = (user: Partial<IUser>) => {
         refreshToken
     }
 }
-
-
 
 export const createNewAccessTokenWithRefreshToken = async (refreshToken: string) => {
     const verifyRefreshToken = verifyToken(refreshToken, envVars.JWT_REFRESH_SECRET) as JwtPayload
@@ -41,6 +39,5 @@ export const createNewAccessTokenWithRefreshToken = async (refreshToken: string)
         role: isUserExist.role
     }
     const accessToken = generateToken(jwtPayload, envVars.JWT_ACCESS_SECRET, envVars.JWT_ACCESS_EXPIRES)
-    
     return accessToken
 }

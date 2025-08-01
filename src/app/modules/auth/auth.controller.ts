@@ -1,6 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-
-
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextFunction, Request, Response } from "express";
 import { catchAsync } from "../../utils/catchAsync";
@@ -55,7 +53,7 @@ const getNewAccessToken = catchAsync(async (req: Request, res: Response, next: N
     sendResponse(res, {
         success: true,
         statusCode: httpStatusCode.OK,
-        message: "new access token retrive Successfully",
+        message: "new access token retrieved Successfully",
         data: tokenInfo,
     })
 })
@@ -91,20 +89,7 @@ const changePassword = catchAsync(async (req: Request, res: Response, next: Next
         message: "reset password Successfully",
         data: null,
     })
-})
-
-const resetPassword = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
-    const newPassword = req.body.newPassword
-    const oldPassword = req.body.oldPassword
-    const decodedToken = req.user
-    await AuthServices.resetPassword(oldPassword, newPassword, decodedToken as JwtPayload)
-    sendResponse(res, {
-        success: true,
-        statusCode: httpStatusCode.OK,
-        message: "reset password Successfully",
-        data: null,
-    })
-})
+}) 
 
 
 const googleCallbackController = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
@@ -119,6 +104,20 @@ const googleCallbackController = catchAsync(async (req: Request, res: Response, 
     const tokenInfo = createUserToken(user)
     setAuthCookie(res, tokenInfo)
     res.redirect(`${envVars.FRONTEND_URL}/${redirectTo}`)
+})
+
+
+const resetPassword = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+    const newPassword = req.body.newPassword
+    const oldPassword = req.body.oldPassword
+    const decodedToken = req.user
+    await AuthServices.resetPassword(oldPassword, newPassword, decodedToken as JwtPayload)
+    sendResponse(res, {
+        success: true,
+        statusCode: httpStatusCode.OK,
+        message: "reset password Successfully",
+        data: null,
+    })
 })
 
 
