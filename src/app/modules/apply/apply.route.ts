@@ -19,26 +19,4 @@ router.patch("/approve/:id", checkAuth(Role.ADMIN, Role.SUPER_ADMIN), ApplyContr
 
 
 export const ApplyRoutes = router
-
-
- 
-
-// User applies as Rider or Driver
-// router.post("/apply", checkAuth(Role.USER), ApplyController.createApplication);
-
-// // User gets own applications
-// router.get("/apply/my", checkAuth(Role.USER), ApplyController.getMyApplications);
-
-// // Admin and Super Admin get all applications
-// router.get("/apply", checkAuth(Role.ADMIN, Role.SUPER_ADMIN), ApplyController.getAllApplications);
-
-// // Admin and Super Admin approve application
-// router.patch("/apply/approve/:id", checkAuth(Role.ADMIN, Role.SUPER_ADMIN), ApplyController.approveApplication);
-
-// // User cancels own application before approval
-// router.delete("/apply/cancel", checkAuth(Role.USER), ApplyController.cancelApplication);
-
-// // User deletes own application (optional)
-// router.delete("/apply/:id", checkAuth(Role.USER), ApplyController.deleteOwnApplication);
-
  
