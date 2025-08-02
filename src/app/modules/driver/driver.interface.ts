@@ -2,12 +2,12 @@ import { Types } from "mongoose";
 
 
 
-export enum IRiderPostStatus {
+export enum IDrivePostStatus {
     APPROVED = 'APPROVED',
     BLOCKED = 'BLOCKED'
 }
 
-export interface IRider {
+export interface IDriver {
     _id?: Types.ObjectId
     title: string
     from: string
@@ -16,7 +16,7 @@ export interface IRider {
     driverId: Types.ObjectId
     driverName: string
     driverEmail: string
-    postStatus: IRiderPostStatus
+    postStatus: IDrivePostStatus
     phoneNumber?: string
     vehicleNumber?: string
     vehicleType?: string

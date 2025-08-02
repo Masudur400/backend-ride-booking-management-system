@@ -1,12 +1,13 @@
 import { JwtPayload } from "jsonwebtoken";
 import { catchAsync } from "../../utils/catchAsync";
-import AppError from "../../errorHandler/AppError";
-import httpStatus from 'http-status-codes'
+import { DriverService } from "./driver.service";
 import { Request, Response } from "express";
-import { User } from "../user/user.model"; 
 import { sendResponse } from "../../utils/sendResponse";
-import { IRiderPostStatus } from "./ride.interface";
-import { RiderService } from "./ride.service";
+import httpStatus from 'http-status-codes'
+import AppError from "../../errorHandler/AppError";
+import { IDrivePostStatus } from "./driver.interface";
+import { User } from "../user/user.model"; 
+
 
 
 
@@ -25,9 +26,9 @@ const createDriverPost = catchAsync(async (req: Request, res: Response) => {
         driverId: user.userId,
         driverName: dbUser.name,
         driverEmail: user.email,
-        postStatus: IRiderPostStatus.APPROVED,
+        postStatus: IDrivePostStatus.APPROVED,
     };
-    const result = await RiderService.createDriverPost(payload);
+    const result = await DriverService.createDriverPost(payload);
     sendResponse(res, {
         statusCode: httpStatus.CREATED,
         success: true,
@@ -40,7 +41,7 @@ const createDriverPost = catchAsync(async (req: Request, res: Response) => {
 
 const getAllDriverPosts = catchAsync(async (req: Request, res: Response) => {
     const query = req.query as Record<string, string>;
-    const result = await RiderService.getAllDriverPosts(query);
+    const result = await DriverService.getAllDriverPosts(query);
     sendResponse(res, {
         statusCode: httpStatus.OK,
         success: true,
@@ -57,7 +58,7 @@ const getMyDriverPosts = catchAsync(async (req: Request, res: Response) => {
     if (!user) {
         throw new AppError(httpStatus.NOT_FOUND, 'user not found !');
     }
-    const posts = await RiderService.getMyDriverPosts(user.userId,query);
+    const posts = await DriverService.getMyDriverPosts(user.userId,query);
     sendResponse(res, {
         statusCode: httpStatus.OK,
         success: true,
@@ -73,7 +74,7 @@ const getMyDriverPosts = catchAsync(async (req: Request, res: Response) => {
   if (!postStatus) {
     throw new AppError(httpStatus.BAD_REQUEST, 'Post status is required');
   } 
-  const updatedPost = await RiderService.updatePostStatus(id, postStatus); 
+  const updatedPost = await DriverService.updatePostStatus(id, postStatus); 
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -90,7 +91,7 @@ const deleteMyDriverPost = catchAsync(async (req: Request, res: Response) => {
         throw new AppError(httpStatus.NOT_FOUND, 'user not found !');
     }
     const { id } = req.params;
-    const deletedPost = await RiderService.deleteMyDriverPost(id, user.userId);
+    const deletedPost = await DriverService.deleteMyDriverPost(id, user.userId);
     sendResponse(res, {
         statusCode: httpStatus.OK,
         success: true,
@@ -100,7 +101,7 @@ const deleteMyDriverPost = catchAsync(async (req: Request, res: Response) => {
 });
 
 
-export const RiderController = {
+export const DriverController = {
     createDriverPost,
     getAllDriverPosts,
     getMyDriverPosts,

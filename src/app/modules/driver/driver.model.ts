@@ -1,7 +1,7 @@
-import { model, Schema } from "mongoose";  
-import { IRider, IRiderPostStatus } from "./ride.interface";
+import { model, Schema } from "mongoose";
+import { IDriver, IDrivePostStatus } from "./driver.interface";
 
-const riderSchema = new Schema<IRider>(
+const driverSchema = new Schema<IDriver>(
     {
         title: { type: String, required: true, },
         from: { type: String, required: true, },
@@ -10,7 +10,7 @@ const riderSchema = new Schema<IRider>(
         driverName: { type: String, required: true, },
         driverEmail: { type: String, required: true },
         amount: { type: Number, required: true, },
-        postStatus: { type: String, enum: Object.values(IRiderPostStatus), default: IRiderPostStatus.APPROVED, required: true },
+        postStatus: { type: String, enum: Object.values(IDrivePostStatus), default: IDrivePostStatus.APPROVED, required: true },
         phoneNumber: { type: String },
         vehicleNumber: { type: String },
         vehicleType: { type: String },
@@ -23,4 +23,4 @@ const riderSchema = new Schema<IRider>(
     }
 );
 
-export const Rider = model<IRider>('Rider', riderSchema);
+export const Driver = model<IDriver>('Driver', driverSchema);

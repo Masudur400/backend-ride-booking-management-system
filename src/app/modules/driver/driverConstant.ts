@@ -1,0 +1,1 @@
+export const driverSearchableFields = ['title', 'from', 'to','driverName','driverEmail'];

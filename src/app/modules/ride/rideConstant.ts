@@ -1,0 +1,1 @@
+export const riderSearchableFields = ['title', 'from', 'to','driverName','driverEmail'];

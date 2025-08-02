@@ -1,24 +1,24 @@
+import { IDriver, IDrivePostStatus } from "./driver.interface";
 import AppError from "../../errorHandler/AppError";
-import { QueryBuilder } from "../../utils/queryBuilder";
-import { IRider, IRiderPostStatus } from "./ride.interface";
-import { Rider } from "./ride.model";
-import { riderSearchableFields } from "./rideConstant";
 import httpStatus from 'http-status-codes'
+import { Driver } from "./driver.model";
+import { QueryBuilder } from "../../utils/queryBuilder";
+import { driverSearchableFields } from "./driverConstant";
 
 
 
 
-const createDriverPost = async (payload: IRider): Promise<IRider> => {
-    const result = await Rider.create(payload);
+const createDriverPost = async (payload: IDriver): Promise<IDriver> => {
+    const result = await Driver.create(payload);
     return result
 };
 
 
 const getAllDriverPosts = async (query: Record<string, string>) => {
-    const queryBuilder = new QueryBuilder(Rider.find(), query);
+    const queryBuilder = new QueryBuilder(Driver.find(), query);
     const driverData = queryBuilder
         .filter()
-        .search(riderSearchableFields)
+        .search(driverSearchableFields)
         .sort()
         .fields()
         .pagination();
@@ -31,11 +31,11 @@ const getAllDriverPosts = async (query: Record<string, string>) => {
 
 
 const getMyDriverPosts = async (driverId: string, query: Record<string, string>) => {
-    const baseQuery = Rider.find({ driverId });
+    const baseQuery = Driver.find({ driverId });
     const queryBuilder = new QueryBuilder(baseQuery, query);
     const driverDataQuery = queryBuilder
         .filter()
-        .search(riderSearchableFields)
+        .search(driverSearchableFields)
         .sort()
         .fields()
         .pagination();
@@ -48,31 +48,35 @@ const getMyDriverPosts = async (driverId: string, query: Record<string, string>)
 
 
 const updatePostStatus = async (postId: string, postStatus: string) => {
-    const validStatuses = Object.values(IRiderPostStatus);
-    if (!validStatuses.includes(postStatus.toUpperCase() as IRiderPostStatus)) {
+    const validStatuses = Object.values(IDrivePostStatus);
+    if (!validStatuses.includes(postStatus.toUpperCase() as IDrivePostStatus)) {
         throw new AppError(httpStatus.BAD_REQUEST, 'Invalid post status');
     }
-    const updatedPost = await Rider.findByIdAndUpdate(postId, { postStatus: postStatus.toUpperCase() }, { new: true });
+    const updatedPost = await Driver.findByIdAndUpdate(postId, { postStatus: postStatus.toUpperCase() }, { new: true });
     if (!updatedPost) {
         throw new AppError(httpStatus.NOT_FOUND, 'Post not found');
     }
     return updatedPost;
-}; 
+};
+
 
 
 
 const deleteMyDriverPost = async (postId: string, driverId: string) => {
-    const deletedPost = await Rider.findOneAndDelete({ _id: postId, driverId });
+    const deletedPost = await Driver.findOneAndDelete({ _id: postId, driverId });
     if (!deletedPost) {
         throw new AppError(httpStatus.NOT_FOUND, "Post not found or unauthorized");
     }
     return deletedPost;
-}; 
+};
 
 
 
 
-export const RiderService = {
+
+
+
+export const DriverService = {
     createDriverPost,
     getAllDriverPosts,
     getMyDriverPosts,
