@@ -13,14 +13,13 @@ export interface IRider {
     from: string
     to: string
     amount: number
-    driverId: Types.ObjectId
-    driverName: string
-    driverEmail: string
+    riderId: Types.ObjectId
+    riderName: string
+    riderEmail: string
     postStatus: IRiderPostStatus
     phoneNumber?: string
     vehicleNumber?: string
     vehicleType?: string
     licenseNumber?: string
     available?: boolean
-
 }

@@ -8,7 +8,7 @@ export const seedSuperAdmin = async () => {
     try {
         const isSuperAdminExist = await User.findOne({ email: envVars.SUPER_ADMIN.SUPER_ADMIN_EMAIL })
         if (isSuperAdminExist) {
-            console.log("super admin already exist");
+            console.log("super admin already exist")
             return
         } 
         console.log('try to create super admin.'); 
@@ -26,9 +26,9 @@ export const seedSuperAdmin = async () => {
             auths:[authProvider]
         } 
         const superAdmin = await User.create(payload)
-        console.log('super admin created successfully. \n');
-        console.log(superAdmin); 
+        console.log('super admin created successfully. \n')
+        console.log(superAdmin)
     } catch (error) { 
-        console.log(error);
+        console.log(error)
     }
 }

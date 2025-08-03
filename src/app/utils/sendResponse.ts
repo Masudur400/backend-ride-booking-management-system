@@ -2,9 +2,9 @@ import { Response } from "express";
 
 
 export interface TMeta {
-    page: number;
-    limit: number;
-    totalPage: number;
+    page: number
+    limit: number
+    totalPage: number
     total: number
 }
 
