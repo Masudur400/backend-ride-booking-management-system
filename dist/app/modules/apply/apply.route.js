@@ -1,0 +1,14 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.ApplyRoutes = void 0;
+const express_1 = require("express");
+const checkAuth_1 = require("../../middlewares/checkAuth");
+const user_interface_1 = require("../user/user.interface");
+const apply_controller_1 = require("./apply.controller");
+const router = (0, express_1.Router)();
+router.post('/create-apply', (0, checkAuth_1.checkAuth)(user_interface_1.Role.USER), apply_controller_1.ApplyController.createApplication);
+router.get('/my-apply', (0, checkAuth_1.checkAuth)(user_interface_1.Role.USER), apply_controller_1.ApplyController.getMyApplication);
+router.get("/all-apply", (0, checkAuth_1.checkAuth)(user_interface_1.Role.ADMIN, user_interface_1.Role.SUPER_ADMIN), apply_controller_1.ApplyController.getAllApplications);
+router.delete("/cancel", (0, checkAuth_1.checkAuth)(user_interface_1.Role.USER), apply_controller_1.ApplyController.cancelApplication);
+router.patch("/approve/:id", (0, checkAuth_1.checkAuth)(user_interface_1.Role.ADMIN, user_interface_1.Role.SUPER_ADMIN), apply_controller_1.ApplyController.approveApplication);
+exports.ApplyRoutes = router;

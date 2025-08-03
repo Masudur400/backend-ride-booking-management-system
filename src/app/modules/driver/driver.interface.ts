@@ -21,6 +21,5 @@ export interface IDriver {
     vehicleNumber?: string
     vehicleType?: string
     licenseNumber?: string
-    available?: boolean
-
+    available?: boolean 
 }
