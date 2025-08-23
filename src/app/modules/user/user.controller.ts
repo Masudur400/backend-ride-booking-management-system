@@ -55,16 +55,31 @@ const getMe = catchAsync(async (req: Request, res: Response, next: NextFunction)
 }) 
  
 
+// const updateUser = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+//   const userId = req.params.id;
+//   const verifiedToken = req.user as JwtPayload;
+//   const payload = req.body; 
+//   const user = await UserServices.updateUser(userId, payload, verifiedToken); 
+//   sendResponse(res, {
+//     success: true,
+//     statusCode: httpStatus.OK,
+//     message: "User Updated Successfully",
+//     data: user,
+//   });
+// });
+
 const updateUser = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
   const userId = req.params.id;
-  const verifiedToken = req.user as JwtPayload;
-  const payload = req.body; 
-  const user = await UserServices.updateUser(userId, payload, verifiedToken); 
+  const verifiedToken = req.user as JwtPayload; // middleware এ attach token
+  const payload = req.body;
+
+  const updatedUser = await UserServices.updateUser(userId, payload, verifiedToken);
+
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
     message: "User Updated Successfully",
-    data: user,
+    data: updatedUser,
   });
 });
 

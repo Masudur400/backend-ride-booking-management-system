@@ -57,16 +57,28 @@ const getMe = (0, catchAsync_1.catchAsync)((req, res, next) => __awaiter(void 0,
         data: result.data
     });
 }));
+// const updateUser = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+//   const userId = req.params.id;
+//   const verifiedToken = req.user as JwtPayload;
+//   const payload = req.body; 
+//   const user = await UserServices.updateUser(userId, payload, verifiedToken); 
+//   sendResponse(res, {
+//     success: true,
+//     statusCode: httpStatus.OK,
+//     message: "User Updated Successfully",
+//     data: user,
+//   });
+// });
 const updateUser = (0, catchAsync_1.catchAsync)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const userId = req.params.id;
-    const verifiedToken = req.user;
+    const verifiedToken = req.user; // middleware এ attach token
     const payload = req.body;
-    const user = yield user_service_1.UserServices.updateUser(userId, payload, verifiedToken);
+    const updatedUser = yield user_service_1.UserServices.updateUser(userId, payload, verifiedToken);
     (0, sendResponse_1.sendResponse)(res, {
         success: true,
         statusCode: http_status_1.default.OK,
         message: "User Updated Successfully",
-        data: user,
+        data: updatedUser,
     });
 }));
 exports.userControllers = {
