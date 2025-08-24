@@ -8,13 +8,13 @@ import httpStatus from 'http-status-codes'
 
 
 
-const createDriverPost = async (payload: IRider): Promise<IRider> => {
+const createRiderPost = async (payload: IRider): Promise<IRider> => {
     const result = await Rider.create(payload)
     return result
 };
 
 
-const getAllDriverPosts = async (query: Record<string, string>) => {
+const getAllRiderPosts = async (query: Record<string, string>) => {
     const queryBuilder = new QueryBuilder(Rider.find(), query)
     const driverData = queryBuilder
         .filter()
@@ -30,7 +30,7 @@ const getAllDriverPosts = async (query: Record<string, string>) => {
 };
 
 
-const getMyDriverPosts = async (riderId: string, query: Record<string, string>) => {
+const getMyRiderPosts = async (riderId: string, query: Record<string, string>) => {
     const baseQuery = Rider.find({ riderId })
     const queryBuilder = new QueryBuilder(baseQuery, query)
     const driverDataQuery = queryBuilder
@@ -61,7 +61,7 @@ const updatePostStatus = async (postId: string, postStatus: string) => {
 
 
 
-const deleteMyDriverPost = async (postId: string, riderId: string) => {
+const deleteMyRiderPost = async (postId: string, riderId: string) => {
     const deletedPost = await Rider.findOneAndDelete({ _id: postId, riderId });
     if (!deletedPost) {
         throw new AppError(httpStatus.NOT_FOUND, "Post not found")
@@ -73,9 +73,9 @@ const deleteMyDriverPost = async (postId: string, riderId: string) => {
 
 
 export const RiderService = {
-    createDriverPost,
-    getAllDriverPosts,
-    getMyDriverPosts,
-    deleteMyDriverPost,
+    createRiderPost,
+    getAllRiderPosts,
+    getMyRiderPosts,
+    deleteMyRiderPost,
     updatePostStatus,
 }

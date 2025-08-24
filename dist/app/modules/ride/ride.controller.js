@@ -20,7 +20,7 @@ const user_model_1 = require("../user/user.model");
 const sendResponse_1 = require("../../utils/sendResponse");
 const ride_interface_1 = require("./ride.interface");
 const ride_service_1 = require("./ride.service");
-const createDriverPost = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const createRiderPost = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const user = req.user;
     if (!user) {
         throw new AppError_1.default(http_status_codes_1.default.NOT_FOUND, 'user not found !');
@@ -30,7 +30,7 @@ const createDriverPost = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(vo
         throw new AppError_1.default(http_status_codes_1.default.NOT_FOUND, 'User not found!');
     }
     const payload = Object.assign(Object.assign({}, req.body), { riderId: user.userId, riderName: dbUser.name, riderEmail: user.email, postStatus: ride_interface_1.IRiderPostStatus.APPROVED });
-    const result = yield ride_service_1.RiderService.createDriverPost(payload);
+    const result = yield ride_service_1.RiderService.createRiderPost(payload);
     (0, sendResponse_1.sendResponse)(res, {
         statusCode: http_status_codes_1.default.CREATED,
         success: true,
@@ -38,9 +38,9 @@ const createDriverPost = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(vo
         data: result,
     });
 }));
-const getAllDriverPosts = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const getAllRiderPosts = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const query = req.query;
-    const result = yield ride_service_1.RiderService.getAllDriverPosts(query);
+    const result = yield ride_service_1.RiderService.getAllRiderPosts(query);
     (0, sendResponse_1.sendResponse)(res, {
         statusCode: http_status_codes_1.default.OK,
         success: true,
@@ -49,13 +49,13 @@ const getAllDriverPosts = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(v
         meta: result.meta,
     });
 }));
-const getMyDriverPosts = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const query = req.params;
+const getMyRiderPosts = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const query = req.query;
     const user = req.user;
     if (!user) {
         throw new AppError_1.default(http_status_codes_1.default.NOT_FOUND, 'user not found !');
     }
-    const posts = yield ride_service_1.RiderService.getMyDriverPosts(user.userId, query);
+    const posts = yield ride_service_1.RiderService.getMyRiderPosts(user.userId, query);
     (0, sendResponse_1.sendResponse)(res, {
         statusCode: http_status_codes_1.default.OK,
         success: true,
@@ -77,13 +77,13 @@ const updatePostStatus = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(vo
         data: updatedPost,
     });
 }));
-const deleteMyDriverPost = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const deleteMyRiderPost = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const user = req.user;
     if (!user) {
         throw new AppError_1.default(http_status_codes_1.default.NOT_FOUND, 'user not found !');
     }
     const { id } = req.params;
-    const deletedPost = yield ride_service_1.RiderService.deleteMyDriverPost(id, user.userId);
+    const deletedPost = yield ride_service_1.RiderService.deleteMyRiderPost(id, user.userId);
     (0, sendResponse_1.sendResponse)(res, {
         statusCode: http_status_codes_1.default.OK,
         success: true,
@@ -92,9 +92,9 @@ const deleteMyDriverPost = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(
     });
 }));
 exports.RiderController = {
-    createDriverPost,
-    getAllDriverPosts,
-    getMyDriverPosts,
+    createRiderPost,
+    getAllRiderPosts,
+    getMyRiderPosts,
     updatePostStatus,
-    deleteMyDriverPost,
+    deleteMyRiderPost,
 };

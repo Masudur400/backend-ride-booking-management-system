@@ -10,7 +10,7 @@ import AppError from "../../errorHandler/AppError";
 
 
 
-export const createApplication = catchAsync(async (req: Request, res: Response) => {
+const createApplication = catchAsync(async (req: Request, res: Response) => {
     const user = req.user as JwtPayload;
     if (!user) {
         throw new AppError(httpStatus.UNAUTHORIZED, 'Unauthorized access');

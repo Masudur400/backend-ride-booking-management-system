@@ -53,7 +53,7 @@ const getAllDriverPosts = catchAsync(async (req: Request, res: Response) => {
 
 
 const getMyDriverPosts = catchAsync(async (req: Request, res: Response) => {
-    const query = req.params
+    const query = req.query as Record<string, string>
     const user = req.user as JwtPayload
     if (!user) {
         throw new AppError(httpStatus.NOT_FOUND, 'user not found !')

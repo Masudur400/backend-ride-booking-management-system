@@ -19,11 +19,11 @@ const ride_interface_1 = require("./ride.interface");
 const ride_model_1 = require("./ride.model");
 const rideConstant_1 = require("./rideConstant");
 const http_status_codes_1 = __importDefault(require("http-status-codes"));
-const createDriverPost = (payload) => __awaiter(void 0, void 0, void 0, function* () {
+const createRiderPost = (payload) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield ride_model_1.Rider.create(payload);
     return result;
 });
-const getAllDriverPosts = (query) => __awaiter(void 0, void 0, void 0, function* () {
+const getAllRiderPosts = (query) => __awaiter(void 0, void 0, void 0, function* () {
     const queryBuilder = new queryBuilder_1.QueryBuilder(ride_model_1.Rider.find(), query);
     const driverData = queryBuilder
         .filter()
@@ -37,7 +37,7 @@ const getAllDriverPosts = (query) => __awaiter(void 0, void 0, void 0, function*
     ]);
     return { meta, data };
 });
-const getMyDriverPosts = (riderId, query) => __awaiter(void 0, void 0, void 0, function* () {
+const getMyRiderPosts = (riderId, query) => __awaiter(void 0, void 0, void 0, function* () {
     const baseQuery = ride_model_1.Rider.find({ riderId });
     const queryBuilder = new queryBuilder_1.QueryBuilder(baseQuery, query);
     const driverDataQuery = queryBuilder
@@ -63,7 +63,7 @@ const updatePostStatus = (postId, postStatus) => __awaiter(void 0, void 0, void 
     }
     return updatedPost;
 });
-const deleteMyDriverPost = (postId, riderId) => __awaiter(void 0, void 0, void 0, function* () {
+const deleteMyRiderPost = (postId, riderId) => __awaiter(void 0, void 0, void 0, function* () {
     const deletedPost = yield ride_model_1.Rider.findOneAndDelete({ _id: postId, riderId });
     if (!deletedPost) {
         throw new AppError_1.default(http_status_codes_1.default.NOT_FOUND, "Post not found");
@@ -71,9 +71,9 @@ const deleteMyDriverPost = (postId, riderId) => __awaiter(void 0, void 0, void 0
     return deletedPost;
 });
 exports.RiderService = {
-    createDriverPost,
-    getAllDriverPosts,
-    getMyDriverPosts,
-    deleteMyDriverPost,
+    createRiderPost,
+    getAllRiderPosts,
+    getMyRiderPosts,
+    deleteMyRiderPost,
     updatePostStatus,
 };

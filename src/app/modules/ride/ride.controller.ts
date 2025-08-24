@@ -11,7 +11,7 @@ import { RiderService } from "./ride.service";
 
 
 
-const createDriverPost = catchAsync(async (req: Request, res: Response) => {
+const createRiderPost = catchAsync(async (req: Request, res: Response) => {
     const user = req.user as JwtPayload
     if (!user) {
         throw new AppError(httpStatus.NOT_FOUND, 'user not found !')
@@ -27,7 +27,7 @@ const createDriverPost = catchAsync(async (req: Request, res: Response) => {
         riderEmail: user.email,
         postStatus: IRiderPostStatus.APPROVED,
     }
-    const result = await RiderService.createDriverPost(payload)
+    const result = await RiderService.createRiderPost(payload)
     sendResponse(res, {
         statusCode: httpStatus.CREATED,
         success: true,
@@ -38,9 +38,9 @@ const createDriverPost = catchAsync(async (req: Request, res: Response) => {
 
 
 
-const getAllDriverPosts = catchAsync(async (req: Request, res: Response) => {
+const getAllRiderPosts = catchAsync(async (req: Request, res: Response) => {
     const query = req.query as Record<string, string>
-    const result = await RiderService.getAllDriverPosts(query)
+    const result = await RiderService.getAllRiderPosts(query)
     sendResponse(res, {
         statusCode: httpStatus.OK,
         success: true,
@@ -51,13 +51,13 @@ const getAllDriverPosts = catchAsync(async (req: Request, res: Response) => {
 })
 
 
-const getMyDriverPosts = catchAsync(async (req: Request, res: Response) => {
-    const query = req.params
+const getMyRiderPosts = catchAsync(async (req: Request, res: Response) => {
+    const query = req.query as Record<string, string>
     const user = req.user as JwtPayload
     if (!user) {
         throw new AppError(httpStatus.NOT_FOUND, 'user not found !')
     }
-    const posts = await RiderService.getMyDriverPosts(user.userId, query)
+    const posts = await RiderService.getMyRiderPosts(user.userId, query)
     sendResponse(res, {
         statusCode: httpStatus.OK,
         success: true,
@@ -84,13 +84,13 @@ const updatePostStatus = catchAsync(async (req: Request, res: Response) => {
 
 
 
-const deleteMyDriverPost = catchAsync(async (req: Request, res: Response) => {
+const deleteMyRiderPost = catchAsync(async (req: Request, res: Response) => {
     const user = req.user as JwtPayload
     if (!user) {
         throw new AppError(httpStatus.NOT_FOUND, 'user not found !')
     }
     const { id } = req.params
-    const deletedPost = await RiderService.deleteMyDriverPost(id, user.userId)
+    const deletedPost = await RiderService.deleteMyRiderPost(id, user.userId)
     sendResponse(res, {
         statusCode: httpStatus.OK,
         success: true,
@@ -101,9 +101,9 @@ const deleteMyDriverPost = catchAsync(async (req: Request, res: Response) => {
 
 
 export const RiderController = {
-    createDriverPost,
-    getAllDriverPosts,
-    getMyDriverPosts,
+    createRiderPost,
+    getAllRiderPosts,
+    getMyRiderPosts,
     updatePostStatus,
-    deleteMyDriverPost,
+    deleteMyRiderPost,
 }

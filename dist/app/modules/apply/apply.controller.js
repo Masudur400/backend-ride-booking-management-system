@@ -12,13 +12,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ApplyController = exports.createApplication = void 0;
+exports.ApplyController = void 0;
 const catchAsync_1 = require("../../utils/catchAsync");
 const apply_service_1 = require("./apply.service");
 const sendResponse_1 = require("../../utils/sendResponse");
 const http_status_codes_1 = __importDefault(require("http-status-codes"));
 const AppError_1 = __importDefault(require("../../errorHandler/AppError"));
-exports.createApplication = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const createApplication = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const user = req.user;
     if (!user) {
         throw new AppError_1.default(http_status_codes_1.default.UNAUTHORIZED, 'Unauthorized access');
@@ -82,7 +82,7 @@ const cancelApplication = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(v
     });
 }));
 exports.ApplyController = {
-    createApplication: exports.createApplication,
+    createApplication,
     getAllApplications,
     approveApplication,
     cancelApplication,

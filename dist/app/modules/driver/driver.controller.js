@@ -50,7 +50,7 @@ const getAllDriverPosts = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(v
     });
 }));
 const getMyDriverPosts = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const query = req.params;
+    const query = req.query;
     const user = req.user;
     if (!user) {
         throw new AppError_1.default(http_status_codes_1.default.NOT_FOUND, 'user not found !');
