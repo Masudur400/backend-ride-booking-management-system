@@ -143,19 +143,7 @@ const getDriverStats = async (driverId: string) => {
     totalEarnings
   };
 };
-// const getDriverStats = async (driverId: string) => {
-//   const totalBookings = await Booking.countDocuments({ transporterId: driverId });
-//   const completedBookings = await Booking.countDocuments({ transporterId: driverId, bookingStatus: "COMPLETED" });
-//   const pendingBookings = await Booking.countDocuments({ transporterId: driverId, bookingStatus: "REQUESTED" });
-//   const cancelledBookings = await Booking.countDocuments({ transporterId: driverId, bookingStatus: "CANCELLED" });
-
-//   return {
-//     totalBookings,
-//     completedBookings,
-//     pendingBookings,
-//     cancelledBookings
-//   };
-// };
+ 
 
 export const StatsService = { 
   getDashboardStats, 
