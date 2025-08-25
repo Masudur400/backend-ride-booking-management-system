@@ -4,6 +4,10 @@ exports.Booking = void 0;
 const mongoose_1 = require("mongoose");
 const booking_interface_1 = require("./booking.interface");
 const bookingSchema = new mongoose_1.Schema({
+    title: { type: String, required: true },
+    from: { type: String, required: true },
+    to: { type: String, required: true },
+    amount: { type: Number, required: true },
     postId: { type: mongoose_1.Schema.Types.ObjectId, required: true },
     transporterId: { type: mongoose_1.Schema.Types.ObjectId, required: true, ref: 'User' },
     transporterName: { type: String, required: true },

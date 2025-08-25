@@ -97,6 +97,23 @@ const updateBookingStatus = async (bookingId: string, userId: Types.ObjectId, ne
 };
 
 
+const deleteBooking = async (bookingId: string, userId: Types.ObjectId): Promise<IBooking | null> => {
+    const booking = await Booking.findById(bookingId)
+    if (!booking) {
+        throw new AppError(httpStatus.NOT_FOUND, 'Booking not found')
+    } 
+    if (![IBookingStatus.CANCELLED, IBookingStatus.REQUESTED].includes(booking.bookingStatus)) {
+        throw new AppError(httpStatus.BAD_REQUEST, `Cannot delete booking with status ${booking.bookingStatus}`)
+    } 
+    if (!booking.bookerId.equals(userId)) {
+        throw new AppError(httpStatus.FORBIDDEN, 'Access denied')
+    } 
+    await booking.deleteOne()
+    return booking
+};
+
+
+
 
 export const BookingService = {
     createBooking,
@@ -104,6 +121,7 @@ export const BookingService = {
     cancelBooking,
     getBookingsOnMyPost,
     updateBookingStatus,
+    deleteBooking
 }
 
 

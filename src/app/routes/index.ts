@@ -5,6 +5,7 @@ import { ApplyRoutes } from "../modules/apply/apply.route";
 import { DriverRoutes } from "../modules/driver/driver.route";
 import { RiderRoutes } from "../modules/ride/ride.route";
 import { BookingRoutes } from "../modules/bookingRider&driver/booking.route";
+import { StatsRoutes } from "../modules/state/state.route";
 
 export const router = Router()
 
@@ -32,6 +33,10 @@ const moduleRoutes = [
     {
         path: '/booking',
         route: BookingRoutes
+    },
+    {
+        path: '/stats',
+        route: StatsRoutes
     },
 ]
 

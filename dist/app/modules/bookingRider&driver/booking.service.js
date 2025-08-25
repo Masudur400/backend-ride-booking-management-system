@@ -94,12 +94,27 @@ const updateBookingStatus = (bookingId, userId, newStatus) => __awaiter(void 0, 
     booking.bookingStatus = newStatus;
     return yield booking.save();
 });
+const deleteBooking = (bookingId, userId) => __awaiter(void 0, void 0, void 0, function* () {
+    const booking = yield booking_model_1.Booking.findById(bookingId);
+    if (!booking) {
+        throw new AppError_1.default(http_status_codes_1.default.NOT_FOUND, 'Booking not found');
+    }
+    if (![booking_interface_1.IBookingStatus.CANCELLED, booking_interface_1.IBookingStatus.REQUESTED].includes(booking.bookingStatus)) {
+        throw new AppError_1.default(http_status_codes_1.default.BAD_REQUEST, `Cannot delete booking with status ${booking.bookingStatus}`);
+    }
+    if (!booking.bookerId.equals(userId)) {
+        throw new AppError_1.default(http_status_codes_1.default.FORBIDDEN, 'Access denied');
+    }
+    yield booking.deleteOne();
+    return booking;
+});
 exports.BookingService = {
     createBooking,
     getMyBookings,
     cancelBooking,
     getBookingsOnMyPost,
     updateBookingStatus,
+    deleteBooking
 };
 // export const BookingService = {
 //   createBooking,

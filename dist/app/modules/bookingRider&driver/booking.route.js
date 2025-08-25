@@ -11,4 +11,5 @@ router.get('/my-bookings', (0, checkAuth_1.checkAuth)(...Object.values(user_inte
 router.delete('/cancel/:id', (0, checkAuth_1.checkAuth)(...Object.values(user_interface_1.Role)), booking_controller_1.BookingControllers.cancelBooking);
 router.get('/my-posts/bookings', (0, checkAuth_1.checkAuth)(user_interface_1.Role.RIDER, user_interface_1.Role.DRIVER), booking_controller_1.BookingControllers.getBookingsOnMyPost);
 router.patch('/update-status/:id', (0, checkAuth_1.checkAuth)(user_interface_1.Role.RIDER, user_interface_1.Role.DRIVER), booking_controller_1.BookingControllers.updateBookingStatus);
+router.delete('/delete/:id', (0, checkAuth_1.checkAuth)(...Object.values(user_interface_1.Role)), booking_controller_1.BookingControllers.deleteBooking);
 exports.BookingRoutes = router;

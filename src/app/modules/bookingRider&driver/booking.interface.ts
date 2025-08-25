@@ -1,16 +1,20 @@
 import { Types } from "mongoose";
 
 
-export enum IBookingStatus { 
-    CANCELLED='CANCELLED',
-    REQUESTED = "REQUESTED",
-    ACCEPTED = "ACCEPTED",
-    PICKED_UP = "PICKED_UP",
-    IN_TRANSIT = "IN_TRANSIT",
-    COMPLETED = "COMPLETED"
+export enum IBookingStatus {
+  CANCELLED = 'CANCELLED',
+  REQUESTED = "REQUESTED",
+  ACCEPTED = "ACCEPTED",
+  PICKED_UP = "PICKED_UP",
+  IN_TRANSIT = "IN_TRANSIT",
+  COMPLETED = "COMPLETED"
 }
 
 export interface IBooking {
+  title: string
+  from: string
+  to: string
+  amount: number
   _id?: Types.ObjectId
   postId: Types.ObjectId
   transporterId: Types.ObjectId

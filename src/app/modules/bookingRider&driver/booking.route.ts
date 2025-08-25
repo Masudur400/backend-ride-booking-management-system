@@ -15,6 +15,7 @@ router.get('/my-bookings', checkAuth(...Object.values(Role)), BookingControllers
 router.delete('/cancel/:id', checkAuth(...Object.values(Role)), BookingControllers.cancelBooking)
 router.get('/my-posts/bookings', checkAuth(Role.RIDER, Role.DRIVER), BookingControllers.getBookingsOnMyPost)
 router.patch('/update-status/:id', checkAuth(Role.RIDER, Role.DRIVER), BookingControllers.updateBookingStatus)
+router.delete('/delete/:id', checkAuth(...Object.values(Role)), BookingControllers.deleteBooking)
 
 
 

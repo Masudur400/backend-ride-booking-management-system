@@ -83,6 +83,19 @@ const updateBookingStatus = catchAsync(async (req: Request, res: Response) => {
 });
 
 
+const deleteBooking = catchAsync(async (req: Request, res: Response) => {
+    const user = req.user as JwtPayload
+    const { id } = req.params
+
+    const result = await BookingService.deleteBooking(id, user.userId)
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Booking deleted successfully',
+        data: result,
+    })
+})
+
 
 export const BookingControllers = {
     createBooking,
@@ -90,5 +103,6 @@ export const BookingControllers = {
     cancelBooking,
     getBookingsOnMyPost,
     updateBookingStatus,
+    deleteBooking
 }
 
