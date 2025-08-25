@@ -118,17 +118,44 @@ const getRiderStats = async (riderId: string) => {
 // ✅ DRIVER Dashboard Stats
 const getDriverStats = async (driverId: string) => {
   const totalBookings = await Booking.countDocuments({ transporterId: driverId });
-  const completedBookings = await Booking.countDocuments({ transporterId: driverId, bookingStatus: "COMPLETED" });
-  const pendingBookings = await Booking.countDocuments({ transporterId: driverId, bookingStatus: "REQUESTED" });
-  const cancelledBookings = await Booking.countDocuments({ transporterId: driverId, bookingStatus: "CANCELLED" });
+  const completedBookings = await Booking.countDocuments({ transporterId: driverId, bookingStatus: IBookingStatus.COMPLETED });
+  const pendingBookings = await Booking.countDocuments({ transporterId: driverId, bookingStatus: IBookingStatus.REQUESTED });
+  const cancelledBookings = await Booking.countDocuments({ transporterId: driverId, bookingStatus: IBookingStatus.CANCELLED });
+
+  // driver earnings (completed bookings এর total amount)
+  const earningsData = await Booking.aggregate([
+    { $match: { transporterId: new Types.ObjectId(driverId), bookingStatus: IBookingStatus.COMPLETED } },
+    {
+      $group: {
+        _id: null,
+        totalEarnings: { $sum: "$amount" } // amount Number type
+      }
+    }
+  ]);
+
+  const totalEarnings = earningsData[0]?.totalEarnings || 0;
 
   return {
     totalBookings,
     completedBookings,
     pendingBookings,
-    cancelledBookings
+    cancelledBookings,
+    totalEarnings
   };
 };
+// const getDriverStats = async (driverId: string) => {
+//   const totalBookings = await Booking.countDocuments({ transporterId: driverId });
+//   const completedBookings = await Booking.countDocuments({ transporterId: driverId, bookingStatus: "COMPLETED" });
+//   const pendingBookings = await Booking.countDocuments({ transporterId: driverId, bookingStatus: "REQUESTED" });
+//   const cancelledBookings = await Booking.countDocuments({ transporterId: driverId, bookingStatus: "CANCELLED" });
+
+//   return {
+//     totalBookings,
+//     completedBookings,
+//     pendingBookings,
+//     cancelledBookings
+//   };
+// };
 
 export const StatsService = { 
   getDashboardStats, 

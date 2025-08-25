@@ -109,17 +109,42 @@ const getRiderStats = (riderId) => __awaiter(void 0, void 0, void 0, function* (
 });
 // ✅ DRIVER Dashboard Stats
 const getDriverStats = (driverId) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
     const totalBookings = yield booking_model_1.Booking.countDocuments({ transporterId: driverId });
-    const completedBookings = yield booking_model_1.Booking.countDocuments({ transporterId: driverId, bookingStatus: "COMPLETED" });
-    const pendingBookings = yield booking_model_1.Booking.countDocuments({ transporterId: driverId, bookingStatus: "REQUESTED" });
-    const cancelledBookings = yield booking_model_1.Booking.countDocuments({ transporterId: driverId, bookingStatus: "CANCELLED" });
+    const completedBookings = yield booking_model_1.Booking.countDocuments({ transporterId: driverId, bookingStatus: booking_interface_1.IBookingStatus.COMPLETED });
+    const pendingBookings = yield booking_model_1.Booking.countDocuments({ transporterId: driverId, bookingStatus: booking_interface_1.IBookingStatus.REQUESTED });
+    const cancelledBookings = yield booking_model_1.Booking.countDocuments({ transporterId: driverId, bookingStatus: booking_interface_1.IBookingStatus.CANCELLED });
+    // Rider earnings (completed bookings এর total amount)
+    const earningsData = yield booking_model_1.Booking.aggregate([
+        { $match: { transporterId: new mongoose_1.Types.ObjectId(driverId), bookingStatus: booking_interface_1.IBookingStatus.COMPLETED } },
+        {
+            $group: {
+                _id: null,
+                totalEarnings: { $sum: "$amount" } // amount Number type
+            }
+        }
+    ]);
+    const totalEarnings = ((_a = earningsData[0]) === null || _a === void 0 ? void 0 : _a.totalEarnings) || 0;
     return {
         totalBookings,
         completedBookings,
         pendingBookings,
-        cancelledBookings
+        cancelledBookings,
+        totalEarnings
     };
 });
+// const getDriverStats = async (driverId: string) => {
+//   const totalBookings = await Booking.countDocuments({ transporterId: driverId });
+//   const completedBookings = await Booking.countDocuments({ transporterId: driverId, bookingStatus: "COMPLETED" });
+//   const pendingBookings = await Booking.countDocuments({ transporterId: driverId, bookingStatus: "REQUESTED" });
+//   const cancelledBookings = await Booking.countDocuments({ transporterId: driverId, bookingStatus: "CANCELLED" });
+//   return {
+//     totalBookings,
+//     completedBookings,
+//     pendingBookings,
+//     cancelledBookings
+//   };
+// };
 exports.StatsService = {
     getDashboardStats,
     getUserStats,
