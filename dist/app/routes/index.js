@@ -9,6 +9,7 @@ const driver_route_1 = require("../modules/driver/driver.route");
 const ride_route_1 = require("../modules/ride/ride.route");
 const booking_route_1 = require("../modules/bookingRider&driver/booking.route");
 const state_route_1 = require("../modules/state/state.route");
+const contact_route_1 = require("../modules/contace/contact.route");
 exports.router = (0, express_1.Router)();
 const moduleRoutes = [
     {
@@ -39,6 +40,10 @@ const moduleRoutes = [
         path: '/stats',
         route: state_route_1.StatsRoutes
     },
+    {
+        path: '/mail',
+        route: contact_route_1.ContactRoutes
+    }
 ];
 moduleRoutes.forEach((route) => {
     exports.router.use(route.path, route.route);
